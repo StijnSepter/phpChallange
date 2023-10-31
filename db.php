@@ -14,8 +14,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $naam = $_POST['name'];
-    $comment = $_POST['comment'];
+    $naam = test_input($_POST["name"]);
+    $comment = test_input($_POST["comment"]);
     $sql = "INSERT INTO comment(naam, comment) VALUES ('$naam', '$comment')";
     if ($conn->query($sql)=== TRUE); {
         $name = $_POST['name'];
@@ -36,4 +36,11 @@ if ($result->num_rows > 0) {
       echo "id: " . $row["id"]. " - Name: " . $row["naam"]." Comment: " . $row["comment"]. " Date: " . $row["time"]. "<br>";
     }
   } else {
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
